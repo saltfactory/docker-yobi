@@ -84,8 +84,9 @@ sh boot2docker-ports.sh
 boot2docker에서 로컬 PC에 있는 디렉토리를 마운트하기 위해서 VirtualBox에서 shared directory를 지정해야 합니다.
 
 다음 사이트에 자세한 방법이 나와 있습니다.
-1. https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c
-2. http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide
+
+  1. https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c
+  2. http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide
 
 ```
 boot2docker down
