@@ -75,7 +75,7 @@ Mac OS X에서 boot2docker를 사용할 경우
 docker는 리눅스 환경에서 사용하지만 Mac OS X에서 [boot2docker](http://docs.docker.com/installation/mac/)를 사용하여 docker-yobi를 사용할 수 있습니다.
 boot2docker 설치방법은 http://docs.docker.com/installation/mac/ 문서를 참조하세요.
 
-boot2docker를 사용하기 위해서는 [VirtualBox](https://www.virtualbox.org)에서 forwarding port를 하기 위해서 docker-yobi 안에 있는 'boot2dockr-ports.sh'를 실행합니다.
+boot2docker를 사용하기 위해서는 [VirtualBox](https://www.virtualbox.org)에서 forwarding port를 하기 위해서 docker-yobi 안에 있는 `boot2dockr-ports.sh`를 실행합니다.
 
 ```
 sh boot2docker-ports.sh
