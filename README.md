@@ -2,6 +2,7 @@
 
 
 ![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
+(이미지출처 : http://yobi.io)
 
 **docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
 
@@ -73,6 +74,7 @@ sh rm.sh
 > 기부금은 연구활동과 블로그 운영에 사용됩니다.
 
 기부방법은 [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)을 이용하는 방법이 있습니다.
+
 [![paypal button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 

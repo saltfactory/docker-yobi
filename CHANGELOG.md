@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - **ubuntu:14.04** 이미지에서 **debian:jessie** 이미지로 변경
 - Java 7에서 Java 8 업데이트
 - [v0.7](https://github.com/saltfactory/docker-yobi/releases/tag/v0.7)에서 사용하던 shell 파일들 삭제
+- README.md 파일 수정 
 
 ### Added
 - `config.sh` docker-yobi 설정파일 추가
