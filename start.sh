@@ -5,8 +5,12 @@ source ./config.sh
 
 if [ ! -d "$YOBI_HOME" ];
 then
+  echo "*** [Notice] *****************************************"
   echo "$YOBI_HOME is not exists!"
-  echo "this command need -h(--home) option that is YOBI_HOME directory path in host\nex) sh run.sh -h ./yobi/"
+  echo "*** [Solution] ***************************************"
+  echo "1. create default YOBI_HOME $(PWD)/yobi"
+  echo "2. open config.sh and set your directory to YOBI_HOME"
+  echo "******************************************************"
   exit
 else
   if [ -f "$YOBI_HOME/RUNNING_PID" ];
