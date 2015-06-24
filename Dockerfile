@@ -1,40 +1,45 @@
-FROM ubuntu:14.04
+FROM debian:jessie
 MAINTAINER SungKwang Song <saltfactory@gmail.com>
 
-# install Oracle Java 7
-RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
-RUN apt-get update && apt-get install -y software-properties-common python-software-properties
-RUN add-apt-repository ppa:webupd8team/java -y
+LABEL Description="This image is used to start the yobi-0.8.1" Vendor="saltfactory.net" Version="0.8.1"
+
+## replace debian mirror with ftp.daum.net in Korea
+RUN cd /etc/apt && \
+     sed -i 's/httpredir.debian.org/ftp.daum.net/g' sources.list
+
+## install Oracle Java 8 and clean up installation files
+RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
+RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 RUN apt-get update
-RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java7-installer
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java8-installer oracle-java8-set-default
 
-# install wget and unzip
-RUN apt-get install -y wget unzip
+## install extra package
+RUN apt-get install -y unzip
 
-# add yobi user
-RUN useradd -m -d /home/yobi -s /bin/bash -U yobi
+## remove cache
+RUN rm -rf /var/cache/oracle-jdk8-installer && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# mount start shell
-ADD start-yobi.sh /home/yobi/start-yobi.sh
-RUN chmod 0755 /home/yobi/start-yobi.sh
 
-# change owner with yobi
-#USER yobi
+## add yobi user
+RUN useradd -m -d /yobi -s /bin/bash -U yobi
 
-# download play-2.1.0 and add PATH
-RUN cd /home/yobi; wget http://downloads.typesafe.com/play/2.1.0/play-2.1.0.zip
-RUN cd /home/yobi; unzip play-2.1.0.zip
-ENV PATH $PATH:/home/yobi/play-2.1.0
+## install yobi
+RUN cd /yobi/downloads; \
+    wget https://github.com/naver/yobi/releases/download/v0.8.1/yobi-0.8.1.zip && \
+    unzip -d /yobi/release yobi-0.8.1.zip
 
-# add volume from client disk yobi
-VOLUME ["/home/yobi/yobi"]
+## set environment variables
+ENV YOBI_HOME "/yobi/home"
+ENV JAVA_OPTS "-Xmx2048m -Xms2048m"
 
-# setting working directory
-WORKDIR /home/yobi
+## yobi home directory mount point from host to docker container
+VOLUME ["/yobi/home"]
+WORKDIR ["/yobi/home"]
 
-# forwarding port number
+## yobi service port expose from docker container to host
 EXPOSE 9000
 
-# run docker command
-CMD ["bash", "/home/yobi/start-yobi.sh"]
+## run yobi command
+CMD ["/yobi/release/yobi-0.8.1/bin/yobi"]
