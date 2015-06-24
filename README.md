@@ -1,105 +1,99 @@
-docker-yobi
-===========
-
-Run yobi on docker
-
-docker-yobi는 docker에서 [Yobi](http://yobi.io)를 운영하기 위한 dockerfile 입니다.
-docker-yobi는 로컬에 있는 yobi 디렉토리를 **mount**하여 사용합니다. 즉, docker-yobi를 실행할 때 docker 이미지에 내 로컬 PC에 있는 yobi 디렉토리를 그대로 사용할 수 있습니다.
+# docker-yobi
 
 
-docker-yobi 사용방법
-==================
+![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
 
-먼저 github에서 yobi를 `clone`합니다. 설치 예제를 설명하기 위해서 yobi를 `clone` 받은 경로는 `/Users/saltfactory/yobi`라고 가정합니다.
+**docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
 
-```
-git clone https://github.com/naver/yobi.git
-```
+## 사용방법
 
-docker나 boot2docker를 시작한 후 `build`를 합니다.
+**docker-yobi**는 복잡한 설정 없이 현재 운영하고 있는 **Yobi** 프로젝트를 바로 최신 Yobi 서비스로 운영할 수 있게 도와줍니다. 간단히 `.sh` 쉘 파일을 실행시키면 됩니다.
 
-```
-docker build -t saltfactory/yobi .
-```
+* `config.sh` : docker-yobi에 관한 설정 정의
+* `build.sh` : docker-yobi 이미지를 생성
+* `start.sh` : docker-yobi 컨테이너를 실행
+* `stop.sh` : docker-yobi 컨테이너를 중지
+* `rm.sh` : docker-yobi 컨테이너를 삭제
+* `logs.sh` : docker-yobi의 로그 확인
 
-docker-yobi의 `run-yobi.sh`를 실행합니다. 이때, 로컬에 `clone`한 yobi의 디렉토리를 지정합니다. 설치 예제로 `clone` 받은 경로는 `/Users/saltfactory/yobi`라고 가정합니다.
+## 설정
 
-```
-sh run-yobi.sh /Users/saltfactory/yobi
-```
+`config.sh` 파일을 열어서 필요한 정보를 수정합니다.
+* `YOBI_HOME` : 내 컴퓨터에 있는 **Yobi 홈 디렉토리**를 경로를 입력합니다. 기본 값은 현재 디렉톨리 안에 `yobi` 디렉토리입니다.
+* `DOCKER_YOBI_NAME` : docker-yobi 컨테이너의 **이름**을 지정합니다. docker에서 관리하기 위한 이름입니다.
+* `DOCKER_YOBI_PORT` : docker-yobi 컨테이너의 외부 **포트번호**입니다. 이 포트번호는 실제 외부에서 접속하는 포트번호로 docker-yobi 컨테이너 내부의 yobi의 포트번호인 9000으로 연결됩니다.
 
-docker-yobi가 정상적으로 실행되고 있는지 확인하기 위해서 `docker ps` 명령어로 확인합니다.
+만약 기존의 yobi를 사용하고 있다면 `YOBI_HOME`의 경로를 기존의 프로젝트 경로로 지정합니다. YOBI_HOME의 `conf/`, `yobi.h2.db`, `repo/`, `uploads/` 를 자동으로 읽어 사용하게 됩니다. 새롭게 시작한다면 YOBI_HOME에 지정한 디렉토리 안에 이 디렉토리와 파일들이 생성됩니다.
 
 ```
-docker ps
+vi config.sh
 ```
-정상적으로 실행이되면 docker ps 목록에 yobi가 보입니다. docker-yobi가 정상적으로 실행되면 [play](https://www.playframework.com/)가 실행되면서 필요한 패키지를 다운받고 컴파일합니다. 만약 설치되는 로그를 보고 싶을 경우는 `docker logs` 명령어로 확인할 수 있습니다.
+```bash
+#!/bin/bash
 
-```
-docker logs yobi
-```
-
-play가 정상적으로 시작이되고 난 다음 브라우저에서 확인합니다.
-
-```
-http://localhost:9000
+YOBI_HOME="$(PWD)/yobi"
+DOCKER_YOBI_NAME="yobi-0.8.1"
+DOCKER_YOBI_PORT="9000"
 ```
 
-docker-yobi 활용방법
-==================
+## 빌드
 
-docker-yobi는 yobi를 사용하는데 필요한 이미지와 컨테이너를 만들게 됩니다. 한번 만들어진 컨테이너를 재사용하면 play가 시작하면서 다운받고 컴파일한 패키지를 다시 다운받고 컴파일하지 않기 때문에 yobi 시작 시간을 줄일 수 있습니다. 새롭게 `docker build`를 하지 않는 이상 빠르게 yobi를 실행할 수 있습니다.
-
-docker에 커네이너로 만들어진 yobi를 정지하기 위해서는 `docker stop` 명령어를 사용합니다.
+`Dockerfile`에 정의한 docker-yobi 이미지를 생성합니다.
 
 ```
-docker stop yobi
+sh build.sh
 ```
 
-다시 yobi 컨테이너를 실행하고 싶을 경우 `run-yobi.sh`를 명령어를 사용합니다.
+## 시작
+
+`config.sh`에 정의한 docker-yobi 컨테이너를 실행합니다.
 
 ```
-sh run-yobi.sh /Users/saltfactory/yobi
+sh start.sh
 ```
 
-다른 서버에서 docker-yobi 사용하여 이전하기
-===================================
+## 중지
 
-docker 환경을 갖춘 모든 리눅스 서버에서 docker-yobi를 사용하여 이전에 사용하던 yobi를 그대로 사용할 수 있습니다.
-만약 yobi를 다른 서버로 이전할 경우, docker-yobi를 설치하고 로컬 PC에 저장된 yobi 디렉토리만 복사해서 이전하는 서버에 복사하여 `run-yobi.sh`를 할 때 이전한 서버에 복사한 yobi 경로를 지정하여 사용하면 됩니다.
-
-
-Mac OS X에서 boot2docker를 사용할 경우
-==================================
-
-docker는 리눅스 환경에서 사용하지만 Mac OS X에서 [boot2docker](http://docs.docker.com/installation/mac/)를 사용하여 docker-yobi를 사용할 수 있습니다.
-boot2docker 설치방법은 http://docs.docker.com/installation/mac/ 문서를 참조하세요.
-
-boot2docker를 사용하기 위해서는 [VirtualBox](https://www.virtualbox.org)에서 forwarding port를 하기 위해서 docker-yobi 안에 있는 `boot2dockr-ports.sh`를 실행합니다.
+`config.sh`에 정의한 docker-yobi 컨테이너를 중지합니다.
 
 ```
-sh boot2docker-ports.sh
+sh stop.sh
 ```
 
-boot2docker에서 로컬 PC에 있는 디렉토리를 마운트하기 위해서 VirtualBox에서 shared directory를 지정해야 합니다.
+## 삭제
 
-다음 사이트에 자세한 방법이 나와 있습니다.
-
-  1. https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c
-  2. http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide
+`config.sh`에 정의한 docker-yobi 컨테이너를 삭제합니다.
 
 ```
-boot2docker down
+sh rm.sh
 ```
 
-```
-curl http://static.dockerfiles.io/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso > ~/.boot2docker/boot2docker.iso
-```
+## 기부하기
 
-```
-VBoxManage sharedfolder add boot2docker-vm -name home -hostpath /Users
-```
+> 기부금은 연구활동과 블로그 운영에 사용됩니다.
 
-```
-boot2docker up
-```
+기부방법은 [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)을 이용하는 방법이 있습니다.
+[![paypal button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+
+
+The MIT License (MIT)
+
+Copyright (c) 2014 SungKwang Song
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
