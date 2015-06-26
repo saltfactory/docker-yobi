@@ -44,7 +44,7 @@ DOCKER_YOBI_PORT="9000"
 `Dockerfile`에 정의한 docker-yobi 이미지를 생성합니다.
 
 ```
-/bin/bash build.sh
+bash build.sh
 ```
 
 ### 2. Yobi sources 이미지 생성
@@ -58,7 +58,7 @@ cd docker-yobi/
 git clone https://github.com/naver/yobi.git yobi
 ```
 ```
-/bin/bash build.sh source
+bash build.sh source
 ```
 
 
@@ -67,7 +67,7 @@ git clone https://github.com/naver/yobi.git yobi
 `config.sh`에 정의한 docker-yobi 컨테이너를 실행합니다.
 
 ```
-/bin/bash start.sh
+bash start.sh
 ```
 
 ## 중지
@@ -75,7 +75,7 @@ git clone https://github.com/naver/yobi.git yobi
 `config.sh`에 정의한 docker-yobi 컨테이너를 중지합니다.
 
 ```
-/bin/bash stop.sh
+bash stop.sh
 ```
 
 ## 삭제
@@ -83,7 +83,7 @@ git clone https://github.com/naver/yobi.git yobi
 `config.sh`에 정의한 docker-yobi 컨테이너를 삭제합니다.
 
 ```
-/bin/bash rm.sh
+bash rm.sh
 ```
 
 ## 기부하기
