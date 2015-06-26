@@ -41,5 +41,5 @@ WORKDIR ["/yobi"]
 EXPOSE 9000
 
 ## run yobi command
-ADD ./entrypoint.sh /yobi/entrypoint.sh
-CMD ["bash", "/yobi/entrypoint.sh"]
+ADD ./entrypoints /yobi/entrypoints
+CMD ["bash", "/yobi/entrypoints/bootstrap.sh"]
