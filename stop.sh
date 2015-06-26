@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./config.sh
+. ./config.sh
 
 echo "*** [Stoping] NAME: $DOCKER_YOBI_NAME, PORT: $DOCKER_YOBI_PORT  YOBI_HOME : $YOBI_HOME ***"
 docker stop $DOCKER_YOBI_NAME

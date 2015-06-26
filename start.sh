@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # echo $YOBI_HOME
-source ./config.sh
+. ./config.sh
 
 if [ ! -d "$YOBI_HOME" ];
 then
   echo "*** [Notice] *****************************************"
   echo "$YOBI_HOME is not exists!"
   echo "*** [Solution] ***************************************"
-  echo "1. create default YOBI_HOME $(PWD)/yobi"
+  echo "1. create default YOBI_HOME $(pwd)/yobi"
   echo "2. open config.sh and set your directory to YOBI_HOME"
   echo "******************************************************"
   exit
