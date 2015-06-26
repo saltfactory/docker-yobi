@@ -7,14 +7,16 @@ All notable changes to this project will be documented in this file.
 - yobi 0.8.1 적용
 - 호스트에서 YOBI_HOME 디렉토리 공유
 - 간단한 shell 파일로 docker-yobi 관리
+- Yobi 풀패키지, 소스설치 두가지 빌드 지원
 
 ### Changed
 - **ubuntu:14.04** 이미지에서 **debian:jessie** 이미지로 변경
 - Java 7에서 Java 8 업데이트
 - [v0.7](https://github.com/saltfactory/docker-yobi/releases/tag/v0.7)에서 사용하던 shell 파일들 삭제
-- README.md 파일 수정 
+- README.md 파일 수정
 
 ### Added
 - `config.sh` docker-yobi 설정파일 추가
-- 명령어 shell 파일 추가 (`start.sh`, `stop.sh`, `rm.sh`, `logs.sh`)
+- 명령어 shell 파일 추가 (`start.sh`, `stop.sh`, `rm.sh`, `logs.sh`, `exec.sh`)
 - `CHANGELOG` 파일 추가
+- `Dockerfile-yobi-sources` Yobi 소스버전 설치 도커파일
