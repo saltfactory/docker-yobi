@@ -58,7 +58,7 @@ cd docker-yobi/
 git clone https://github.com/naver/yobi.git yobi
 ```
 ```
-bash build.sh source
+bash build.sh sources
 ```
 
 
