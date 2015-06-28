@@ -1,6 +1,9 @@
 # docker-yobi
 
+![License](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![Latest release](https://img.shields.io/badge/release-v0.8.1-ff69b4.svg)](https://github.com/saltfactory/docker-yobi/releases)
 [![Build Status](https://travis-ci.org/saltfactory/docker-yobi.svg)](https://travis-ci.org/saltfactory/docker-yobi)
+
 
 **docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
 
