@@ -1,14 +1,15 @@
 language: bash
 
-# for secret experimental features ;)
-dist: trusty
+# allow for use of Docker-based workers
+sudo: false
 
-install:
-  - git clone https://github.com/docker-library/official-images.git ~/official-images
+before_script:
+    - env | sort
 
+# --no-build because we has no Docker in Travis :)
 script:
-  - docker version" .
-
+  - docker version
+    # - ./bashbrew/travis.sh
 # vim:set et ts=2 sw=2:
 # sudo: required
 # # language: bash
