@@ -1,10 +1,13 @@
-language: bash
-# sudo: required
-dist: trusty
+sudo: false
+# language: bash
+# dist: trusty
 
-install:
-  - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
+# install:
+#   - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
 
 script:
-  - cd ~/dockers/docker-yobi; bash build.sh
-  - cd ~/dockers/docker-yobi; bash start.sh
+  - docker version
+
+  # - cd ~/docker/docker-yobi; mkdir yobi
+  # - cd ~/dockers/docker-yobi; bash build.sh
+  # - cd ~/dockers/docker-yobi; bash start.sh
