@@ -1,5 +1,6 @@
 language: bash
-sudo: false
+# sudo: required
+dist: trusty
 
 install:
   - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
