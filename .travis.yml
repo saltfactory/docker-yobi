@@ -2,11 +2,12 @@
 # language: bash
 # dist: trusty
 
-# install:
+install:
+  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
 #   - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
 
 script:
-  - docker version
+  - ./run "docker version && docker info"
 
   # - cd ~/docker/docker-yobi; mkdir yobi
   # - cd ~/dockers/docker-yobi; bash build.sh
