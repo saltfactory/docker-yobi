@@ -1,37 +1,29 @@
-language: bash
+language: c
 
-# allow for use of Docker-based workers
-# sudo: false
-
-
-before_script:
+env:
+    global:
+        - "HOST_IP=$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
+        - DOCKER_HOST=tcp://$HOST_IP:2375
+        - DOCKER_PORT_RANGE=2400:2500
+        - SLIRP_PORTS=$(seq 2375 2500)
 
 before_install:
-  - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
-  - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-  - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
-  - sudo chmod +x /usr/sbin/policy-rc.d
+    - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
+    - sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+    - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
+    - sudo chmod +x /usr/sbin/policy-rc.d
 
 install:
-  - sudo apt-get -qqy update
-  - sudo apt-get -qqy install lxc lxc-docker-1.2.0 slirp
-  - sudo sudo usermod -aG docker "$USER"
-  - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
+    - sudo apt-get -qqy update
+    - sudo apt-get -qqy install lxc lxc-docker-1.2.0 slirp
+    - sudo sudo usermod -aG docker "$USER"
+    - git clone git://github.com/cptactionhank/sekexe
 
-# --no-build because we has no Docker in Travis :)
+before_script:
+    - "sekexe/run 'mount -t tmpfs -o size=8g tmpfs /var/lib/docker && docker -d -H tcp://0.0.0.0:2375' &"
+    - "while ! docker info &> /dev/null ; do sleep 1; done"
+
 script:
-  - cd ~/docker/docker-yobi; mkdir yobi
-  - cd ~/dockers/docker-yobi; bash build.sh
-  - cd ~/dockers/docker-yobi; bash start.sh
-
-    # - ./bashbrew/travis.sh
-# vim:set et ts=2 sw=2:
-# sudo: required
-# # language: bash
-# # dist: trusty
-#
-#
-# script:
-  # - cd ~/docker/docker-yobi; mkdir yobi
-  # - cd ~/dockers/docker-yobi; bash build.sh
-  # - cd ~/dockers/docker-yobi; bash start.sh
+    - bash build.sh
+    # - docker version
+    # - docker run -t snim2/parallella-devenv examples/apps/hello-world/build.sh
