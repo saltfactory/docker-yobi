@@ -1,5 +1,6 @@
 # docker-yobi
 
+[![Build Status](https://travis-ci.org/saltfactory/docker-yobi.svg)](https://travis-ci.org/saltfactory/docker-yobi)
 
 ![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
 (이미지출처 : http://yobi.io)

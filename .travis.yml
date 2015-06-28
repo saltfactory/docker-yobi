@@ -1,0 +1,9 @@
+language: bash
+sudo: false
+
+install:
+  - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
+
+script:
+  - cd ~/dockers/docker-yobi; bash build.sh
+  - cd ~/dockers/docker-yobi; bash start.sh
