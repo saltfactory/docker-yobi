@@ -27,7 +27,6 @@ script:
     - bash build.sh
     - mkdir yobi
     - bash start.sh
-    - bash logs.sh
     - bash stop.sh
     - bash rm.sh
     # - docker version
