@@ -1,31 +1,38 @@
 language: bash
 
 # allow for use of Docker-based workers
-sudo: false
+# sudo: false
+
 
 before_script:
-    - env | sort
+  - env | sort
+
+before_install:
+  - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
+  - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+  - sudo apt-get update
+  - sudo mkdir -p /var/lib/docker
+  - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
+  - sudo chmod +x /usr/sbin/policy-rc.d
+  - sudo apt-get install -y slirp lxc lxc-docker aufs-tools cgroup-lite
+
+install:
+  - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
 
 # --no-build because we has no Docker in Travis :)
 script:
-  - docker version
+  - cd ~/docker/docker-yobi; mkdir yobi
+  - cd ~/dockers/docker-yobi; bash build.sh
+  - cd ~/dockers/docker-yobi; bash start.sh
+
     # - ./bashbrew/travis.sh
 # vim:set et ts=2 sw=2:
 # sudo: required
 # # language: bash
 # # dist: trusty
 #
-# install:
-#   - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
-#   - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-#   - sudo apt-get update
-#   - sudo mkdir -p /var/lib/docker
-#   - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
-#   - sudo chmod +x /usr/sbin/policy-rc.d
-#   - sudo apt-get install -y slirp lxc lxc-docker aufs-tools cgroup-lite
-#   - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
 #
 # script:
-#   - cd ~/docker/docker-yobi; mkdir yobi
-#   - cd ~/dockers/docker-yobi; bash build.sh
-#   - cd ~/dockers/docker-yobi; bash start.sh
+  # - cd ~/docker/docker-yobi; mkdir yobi
+  # - cd ~/dockers/docker-yobi; bash build.sh
+  # - cd ~/dockers/docker-yobi; bash start.sh
