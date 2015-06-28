@@ -2,10 +2,11 @@
 
 [![Build Status](https://travis-ci.org/saltfactory/docker-yobi.svg)](https://travis-ci.org/saltfactory/docker-yobi)
 
+**docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
+
 ![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
 (이미지출처 : http://yobi.io)
 
-**docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
 
 ## 사용방법
 
