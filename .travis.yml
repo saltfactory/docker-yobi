@@ -5,18 +5,17 @@ language: bash
 
 
 before_script:
-  - env | sort
 
 before_install:
   - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
   - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-  - sudo apt-get update
-  - sudo mkdir -p /var/lib/docker
   - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
   - sudo chmod +x /usr/sbin/policy-rc.d
-  - sudo apt-get install -y slirp lxc lxc-docker aufs-tools cgroup-lite
 
 install:
+  - sudo apt-get -qqy update
+  - sudo apt-get -qqy install lxc lxc-docker-1.2.0 slirp
+  - sudo sudo usermod -aG docker "$USER"
   - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
 
 # --no-build because we has no Docker in Travis :)
