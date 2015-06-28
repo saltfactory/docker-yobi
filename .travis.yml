@@ -3,12 +3,16 @@
 # dist: trusty
 
 install:
-  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
-#   - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
+  - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
+  - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+  - sudo apt-get update
+  - sudo mkdir -p /var/lib/docker
+  - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
+  - sudo chmod +x /usr/sbin/policy-rc.d
+  - sudo apt-get install -y slirp lxc lxc-docker aufs-tools cgroup-lite
+  - git clone https://github.com/saltfactory/docker-yobi.git ~/dockers/docker-yobi
 
 script:
-  - ./run "docker version && docker info"
-
-  # - cd ~/docker/docker-yobi; mkdir yobi
-  # - cd ~/dockers/docker-yobi; bash build.sh
-  # - cd ~/dockers/docker-yobi; bash start.sh
+  - cd ~/docker/docker-yobi; mkdir yobi
+  - cd ~/dockers/docker-yobi; bash build.sh
+  - cd ~/dockers/docker-yobi; bash start.sh
