@@ -21,25 +21,34 @@ RUN apt-get install -y unzip
 ## remove cache
 RUN rm -rf /var/cache/oracle-jdk8-installer && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-
 ## add yobi user
 RUN useradd -m -d /yobi -s /bin/bash -U yobi
 
+RUN mkdir /yobi/downloads
+RUN cd /yobi/downloads; \
+    wget http://downloads.typesafe.com/typesafe-activator/1.2.10/typesafe-activator-1.2.10-minimal.zip &&\
+    unzip typesafe-activator-1.2.10-minimal.zip
+
 ## install yobi
 RUN cd /yobi/downloads; \
-    wget https://github.com/naver/yobi/releases/download/v0.8.1/yobi-0.8.1.zip && \
-    unzip -d /yobi/release yobi-0.8.1.zip
+    wget https://github.com/naver/yobi/releases/download/v0.8.2/yobi-0.8.2.zip && \
+    unzip -d /yobi/release yobi-0.8.2.zip
 
 ## set environment variables
-ENV YOBI_HOME "/yobi/home"
+ENV YOBI_HOME "/yobi/release"
 ENV JAVA_OPTS "-Xmx2048m -Xms2048m"
+ENV PATH $PATH:/yobi/downloads/activator-1.2.10-minimal
+
+## add entrypoints
+ADD ./entrypoints /yobi/entrypoints
+RUN chmod +x /yobi/entrypoints/*.sh
 
 ## yobi home directory mount point from host to docker container
-VOLUME ["/yobi/home"]
-WORKDIR ["/yobi/home"]
+VOLUME ["/yobi/source", "/yobi/home"]
+WORKDIR ["/yobi"]
 
 ## yobi service port expose from docker container to host
 EXPOSE 9000
 
 ## run yobi command
-CMD ["/yobi/release/yobi-0.8.1/bin/yobi"]
+ENTRYPOINT ["/yobi/entrypoints/bootstrap.sh"]

@@ -1,7 +1,7 @@
 # docker-yobi
 
 ![License](https://img.shields.io/github/license/mashape/apistatus.svg)
-[![Latest release](https://img.shields.io/badge/release-v0.8.1-ff69b4.svg)](https://github.com/saltfactory/docker-yobi/releases)
+[![Latest release](https://img.shields.io/badge/release-v0.8.2-ff69b4.svg)](https://github.com/saltfactory/docker-yobi/releases)
 [![Build Status](https://travis-ci.org/saltfactory/docker-yobi.svg)](https://travis-ci.org/saltfactory/docker-yobi)
 
 
@@ -13,82 +13,197 @@
 
 ## 사용방법
 
-**docker-yobi**는 복잡한 설정 없이 현재 운영하고 있는 **Yobi** 프로젝트를 바로 최신 Yobi 서비스로 운영할 수 있게 도와줍니다. 간단히 `.sh` 쉘 파일을 실행시키면 됩니다.
+**docker-yobi**는 복잡한 설정 없이 현재 운영하고 있는 **Yobi** 프로젝트를 바로 최신 Yobi 서비스로 운영할 수 있게 도와줍니다.
+간단히 **shell/yobi.sh** 쉘 파일을 실행시키면 됩니다.
 
-* `config.sh` : docker-yobi에 관한 설정 정의
-* `build.sh` : docker-yobi 이미지를 생성
-* `start.sh` : docker-yobi 컨테이너를 실행
-* `stop.sh` : docker-yobi 컨테이너를 중지
-* `rm.sh` : docker-yobi 컨테이너를 삭제
-* `logs.sh` : docker-yobi의 로그 확인
+- **shell/yobi.sh build** : yobi 0.8.2 풀 패키지 버전을 빌드합니다.
+- **shell/yobi.sh build src** : yobi 0.8.2 소소 패키지 버전을 빌드합니다.
+- **shell/yobi.sh init** : 빌드한 docker 이미지를 컨테이너로 초기 실행합니다.
+- **shell/yobi.sh stop** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
+- **shell/yobi.sh restart** : 컨테이너를 재시작합니다.
+- **shell/yobi.sh stop** : 커네티너를 중지합니다.
+- **shell/yobi.sh rm** : 컨테이너를 삭제합니다.
+- **shell/yobi.sh log** : 컨테이너의 로그를 출력합니다.
+- **shell/yobi.sh exec** : 운영중인 컨테이너 내부에 **bash** 쉘로 들어가게 됩니다.
+
+쉘 파일은 다음과 같이 **+x** 권한을 추가해 명령어를 간단하게 만들 수 있습니다.
+
+```
+chmod +x shell/yobi.sh
+```
+```
+./shell/yobi start
+```
+
+[alias](http://www.linfo.org/alias.html)를 사용하면 더욱 간단하게 만들 수 있습니다. **~/.bash_profile**을 열어서 다음을 추가합니다.
+
+```
+alias yobi="bash {docker-yobi홈}/shell/yobi.sh"
+```
+
+터미널을 재 시작하거나 **source ~/.bash_profile**을 합니다. 이후에 다음과 같이 **yobi** 를 사용하여 간단하게 실행할 수 있습니다.
+
+```
+yobi start
+```
+
 
 ## 설정
 
 `config.sh` 파일을 열어서 필요한 정보를 수정합니다.
-* `YOBI_HOME` : 내 컴퓨터에 있는 **Yobi 홈 디렉토리**를 경로를 입력합니다. 기본 값은 현재 디렉톨리 안에 `yobi` 디렉토리입니다.
-* `DOCKER_YOBI_NAME` : docker-yobi 컨테이너의 **이름**을 지정합니다. docker에서 관리하기 위한 이름입니다.
-* `DOCKER_YOBI_PORT` : docker-yobi 컨테이너의 외부 **포트번호**입니다. 이 포트번호는 실제 외부에서 접속하는 포트번호로 docker-yobi 컨테이너 내부의 yobi의 포트번호인 9000으로 연결됩니다.
 
-만약 기존의 yobi를 사용하고 있다면 `YOBI_HOME`의 경로를 기존의 프로젝트 경로로 지정합니다. YOBI_HOME의 `conf/`, `yobi.h2.db`, `repo/`, `uploads/` 를 자동으로 읽어 사용하게 됩니다. 새롭게 시작한다면 YOBI_HOME에 지정한 디렉토리 안에 이 디렉토리와 파일들이 생성됩니다.
+만약 기존의 yobi를 사용하고 있다면 `YOBI_HOME`의 경로를 기존의 프로젝트 경로로 지정합니다.
+YOBI_HOME의 `conf/`, `yobi.h2.db`, `repo/`, `uploads/` 를 자동으로 읽어 사용하게 됩니다.
+새롭게 시작한다면 YOBI_HOME에 지정한 디렉토리 안에 이 디렉토리와 파일들이 생성됩니다.
 
 ```
 vi config.sh
 ```
 ```bash
-#!/bin/bash
-
-YOBI_HOME="$(PWD)/yobi"
-DOCKER_YOBI_NAME="yobi-0.8.1"
-DOCKER_YOBI_PORT="9000"
+############################################################
+## docker project name
+PROJECT_NAME="docker-yobi"
+############################################################
+## docker configurations
+DOCKER_USER="saltfactory"
+DOCKER_VERSION="0.8.2"
+DOCKER_NAME="yobi"
+DOCKER_IMAGE="$DOCKER_USER/$DOCKER_NAME:$DOCKER_VERSION"
+############################################################
+## container configurations
+DOCKER_CONTAINER_NAME="demo-yobi"
+DOCKER_CONTAINER_PORT="7001"
+############################################################
+## container volumes
+YOBI_SOURCE="/Users/saltfactory/shared/yobi-0.8.2"
+YOBI_HOME="/Users/saltfactory/shared/yobi-0.8.2"
+YOBI_OPT="-Xmx1024m -Xms1024m"
+############################################################
 ```
 
-## 빌드
+## 이미지 생성 빌드
 
-### 1. Yobi 풀 패키지 이미지 생성
+### 1. 풀 패키지 이미지 생성
 
-`Dockerfile`에 정의한 docker-yobi 이미지를 생성합니다.
-
-```
-bash build.sh
-```
-
-### 2. Yobi sources 이미지 생성
-
-**docker-yobi** 디렉토리 안에서 **yobi**를 clone 합니다. build.sh 뒤에 **sources** 아규먼트를 추가합니다.
+**shell/config.sh** 에서 정의한 풀 패키지 이미지를 생성하기 위해 **build** 옵션을 사용합니다.
 
 ```
-cd docker-yobi/
+bash shell/yobi.sh build
 ```
 ```
-git clone https://github.com/naver/yobi.git yobi
+./shell/yobi build
 ```
 ```
-bash build.sh sources
+yobi build
 ```
 
+### 2. 소스 이미지 생성
 
-## 시작
-
-`config.sh`에 정의한 docker-yobi 컨테이너를 실행합니다.
-
-```
-bash start.sh
-```
-
-## 중지
-
-`config.sh`에 정의한 docker-yobi 컨테이너를 중지합니다.
+**shell/config.sh** 에서 정의한 소스패키지 이미지를 생성하기 위해 **build src** 옵션을 사용합니다.
 
 ```
-bash stop.sh
+bash shell/yobi.sh build src
+```
+```
+./shell/yobi build src
+```
+```
+yobi build src
 ```
 
-## 삭제
+## 컨테이너 실행
 
-`config.sh`에 정의한 docker-yobi 컨테이너를 삭제합니다.
+### 1. 컨테이너 초기 실행
+**shell/config.sh** 에서 정의한 컨테이너를 초기 실행하기 위해 **init** 옵션을 사용합니다.
 
 ```
-bash rm.sh
+bash shell/yobi.sh init
+```
+```
+./shell/yobi init
+```
+```
+yobi init
+```
+
+### 2. 컨테이너 실행
+컨테이너가 실행했던 적이 있다면 캐시에 있는 정보를 불러와 빠르게 다시 시작하기 위해 **start** 옵션을 사용합니다.
+
+```
+bash shell/yobi.sh start
+```
+```
+./shell/yobi start
+```
+```
+yobi start
+```
+
+### 3. 컨테이너 재실행
+컨테이너가 실행되고 있을 때 컨테이너를 다시 실행하기 위해 **restart** 옵션을 사용합니다.
+
+```
+bash shell/yobi.sh restart
+```
+```
+./shell/yobi restart
+```
+```
+yobi restart
+```
+
+## 컨테이너 중지
+
+컨테이너가 실행되고 있을 때 컨테이너를 중지하기 위해 **stop** 옵션을 사용합니다.
+
+```
+bash shell/yobi.sh stop
+```
+```
+./shell/yobi.sh stop
+```
+```
+yobi stop
+```
+
+## 컨테이너 삭제
+
+캐시에 있는 컨테이너를 모두 삭제하기 위해 **rm** 옵션을 사용합니다.
+
+```
+bash shell/yobi.sh rm
+```
+```
+./shell/yobi rm
+```
+```
+yobi rm
+```
+
+## 컨테이너 내부 접속
+컨테이너가 실행되고 있을 때 컨테이너에 접속하기 위해 **exec** 옵션을 사용합니다. 컨테이너 내부에 bash 쉘로 들어가게 됩니다.
+
+```
+bash shell/yobi.sh exec
+```
+```
+./shell/yobi exec
+```
+```
+yobi exec
+```
+
+## 컨테이너 로그 출력
+컨테이너의 로그를 확인하기 위해서 **log** 옵션을 사용합니다.
+
+```
+bash shell/yobi.sh log
+```
+```
+./shell/yobi log
+```
+```
+yobi log
 ```
 
 ## 기부하기

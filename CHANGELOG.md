@@ -1,6 +1,21 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [[0.8.2]](https://github.com/saltfactory/docker-yobi/releases/tag/0.8.2) - 2015-07-08
+
+### Features
+
+- [yobi 0.8.2](https://github.com/naver/yobi/releases/tag/v0.8.2) 적용
+
+### Changed
+- 기존의 shell 파일을 **shell/yobi.sh**로 통합
+- source 빌드를 위한 **Dockerfile-yobi-sources** 삭제, **bootstrap.sh**에서 통합
+- **start.sh** 에 있었던 `docker start`, `docker restart` 명령어 기능 분리
+- README 내용 수정
+
+### Added
+- [travis-cli](https://travis-ci.org/saltfactory/docker-yobi) 테스트 추가
+
 ## [[0.8.1]](https://github.com/saltfactory/docker-yobi/releases/tag/0.8.1) - 2015-06-24
 
 ### Features
