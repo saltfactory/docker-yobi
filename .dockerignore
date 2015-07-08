@@ -1,7 +1,7 @@
 .git
 .gitignore
 yobi
+shell
 *.md
 *.sh
 LICENSE
-  
