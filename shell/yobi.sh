@@ -29,16 +29,28 @@ function build_image {
 function init_container {
   remove_containers
 
-  echo "*** [init] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
-  docker run \
-  --name $DOCKER_CONTAINER_NAME \
-  -p $DOCKER_CONTAINER_PORT:9000 \
-  -v $YOBI_SOURCE:/yobi/source \
-  -v $YOBI_HOME:/yobi/home \
-  -e YOBI_OPT="$YOBI_OPT" \
-  -e BEFORE_SCRIPT=before.sh \
-  -d \
-  $DOCKER_IMAGE
+  if [ -n "$YOBI_SOURCE" ]; then
+    echo "*** [init YOBI source package] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
+    docker run \
+    --name $DOCKER_CONTAINER_NAME \
+    -p $DOCKER_CONTAINER_PORT:9000 \
+    -v $YOBI_SOURCE:/yobi/source \
+    -v $YOBI_HOME:/yobi/home \
+    -e YOBI_OPT="$YOBI_OPT" \
+    -e BEFORE_SCRIPT=before.sh \
+    -d \
+    $DOCKER_IMAGE
+  else
+    echo "*** [init YOBI source pakage] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
+    docker run \
+    --name $DOCKER_CONTAINER_NAME \
+    -p $DOCKER_CONTAINER_PORT:9000 \
+    -v $YOBI_HOME:/yobi/home \
+    -e YOBI_OPT="$YOBI_OPT" \
+    -e BEFORE_SCRIPT=before.sh \
+    -d \
+    $DOCKER_IMAGE
+  fi
 
   docker ps
 }

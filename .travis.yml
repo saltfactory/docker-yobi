@@ -24,10 +24,9 @@ before_script:
     - "while ! docker info &> /dev/null ; do sleep 1; done"
 
 script:
-    - bash build.sh
-    - mkdir yobi
-    - bash start.sh
-    - bash stop.sh
-    - bash rm.sh
-    # - docker version
-    # - docker run -t snim2/parallella-devenv examples/apps/hello-world/build.sh
+    - mkdir /Users/saltfactory/shared/yobi-0.8.2
+    - bash shell/yobi.sh build
+    - bash shell/yobi.sh init
+    - bash shell/yobi.sh stop
+    - bash shell/yobi.sh rm
+    
