@@ -60,6 +60,8 @@ YOBI_HOME의 `conf/`, `yobi.h2.db`, `repo/`, `uploads/` 를 자동으로 읽어 
 vi config.sh
 ```
 ```bash
+#!/bin/bash
+
 ############################################################
 ## docker project name
 PROJECT_NAME="docker-yobi"
@@ -74,8 +76,8 @@ DOCKER_IMAGE="$DOCKER_USER/$DOCKER_NAME:$DOCKER_VERSION"
 DOCKER_CONTAINER_NAME="demo-yobi"
 DOCKER_CONTAINER_PORT="7001"
 ############################################################
-## container volumes
-YOBI_SOURCE="/Users/saltfactory/shared/yobi-0.8.2"
+## container volumes, if you want to install full package, you must remove YOBI_SOURCE.
+#YOBI_SOURCE="/Users/saltfactory/shared/yobi-0.8.2"
 YOBI_HOME="/Users/saltfactory/shared/yobi-0.8.2"
 YOBI_OPT="-Xmx1024m -Xms1024m"
 ############################################################
@@ -86,6 +88,9 @@ YOBI_OPT="-Xmx1024m -Xms1024m"
 ### 1. 풀 패키지 이미지 생성
 
 **shell/config.sh** 에서 정의한 풀 패키지 이미지를 생성하기 위해 **build** 옵션을 사용합니다.
+한가지 중요하게 중의해야할 것은 만약 **풀 패키지**로 설치를 하려면
+
+> 반드시 **shell/config.sh** 파일의 `YOBI_SOURCE` 변수를 삭제하고 실행합니다.
 
 ```
 bash shell/yobi.sh build
@@ -97,9 +102,12 @@ bash shell/yobi.sh build
 yobi build
 ```
 
-### 2. 소스 이미지 생성
+### 2. 소스 패키지 이미지 생성
 
-**shell/config.sh** 에서 정의한 소스패키지 이미지를 생성하기 위해 **build src** 옵션을 사용합니다.
+**shell/config.sh** 에서 정의한 소스 패키지 이미지를 생성하기 위해 **build src** 옵션을 사용합니다.
+한가지 중요하게 중의해야할 것은 만약 **소스 패키지**로 설치를 하려면
+
+> 반드시 **shell/config.sh** 파일의 `YOBI_SOURCE` 변수에 YOBI의 소스 디렉토리 경로를 입력합니다.
 
 ```
 bash shell/yobi.sh build src
