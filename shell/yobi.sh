@@ -2,6 +2,12 @@
 
 source ./shell/config.sh
 
+echo $YOBI_HOME
+
+if [ ! -n "$YOBI_HOME" ]; then
+  YOBI_HOME=$PWD/yobi
+fi
+
 function is_running {
   docker ps | grep $DOCKER_CONTAINER_NAME
 }
@@ -13,12 +19,15 @@ function is_exists {
 function build_image {
   if [ "$1" = "src" ]; then
     echo "*** [Building] \"$DOCKER_IMAGE\" via sources package ***"
-    if [ ! -d $YOBI_HOME ]; then
-      git https://github.com/naver/yobi.git $YOBI_HOME
+    if [ ! -d $YOBI_SOURCE ]; then
+      git https://github.com/naver/yobi.git $YOBI_SOURCE
     else
       echo "*** $YOBI_HOME is exist"
     fi
   else
+    if [ ! -d $YOBI_HOME ]; then
+      mkdir -p $YOBI_HOME
+    fi
     echo "*** [Building] \"$DOCKER_IMAGE\" via full package ***"
   fi
 
@@ -36,17 +45,17 @@ function init_container {
     -p $DOCKER_CONTAINER_PORT:9000 \
     -v $YOBI_SOURCE:/yobi/source \
     -v $YOBI_HOME:/yobi/home \
-    -e YOBI_OPT="$YOBI_OPT" \
+    -e JAVA_OPT="$YOBI_OPT" \
     -e BEFORE_SCRIPT=before.sh \
     -d \
     $DOCKER_IMAGE
   else
-    echo "*** [init YOBI source pakage] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
+    echo "*** [init YOBI full pakage] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
     docker run \
     --name $DOCKER_CONTAINER_NAME \
     -p $DOCKER_CONTAINER_PORT:9000 \
     -v $YOBI_HOME:/yobi/home \
-    -e YOBI_OPT="$YOBI_OPT" \
+    -e JAVA_OPT="$JAVA_OPT" \
     -e BEFORE_SCRIPT=before.sh \
     -d \
     $DOCKER_IMAGE
@@ -70,6 +79,9 @@ function start_container {
 
 function restart_container {
   if [[ -n $(is_running) ]]; then
+    if [ -f "$YOBI_HOME/RUNNING_PID" ];then
+      rm $YOBI_HOME/RUNNING_PID
+    fi
     echo "*** [restart] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
     docker restart $DOCKER_CONTAINER_NAME
   else
@@ -81,6 +93,11 @@ function stop_container {
   if [[ -n $(is_running) ]]; then
     echo "*** [stop] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
     docker stop $DOCKER_CONTAINER_NAME
+
+    if [ -f "$YOBI_HOME/RUNNING_PID" ];then
+      rm $YOBI_HOME/RUNNING_PID
+    fi
+
   else
     echo "*** \"$DOCKER_CONTAINER_NAME\" is not running! ***"
   fi
@@ -104,7 +121,6 @@ function log_containers {
 function exec_container {
   docker exec -it $DOCKER_CONTAINER_NAME bash
 }
-
 
 echo "*** [Run] *** "
 if [ -n "$1" ]; then

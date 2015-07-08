@@ -24,9 +24,8 @@ before_script:
     - "while ! docker info &> /dev/null ; do sleep 1; done"
 
 script:
-    - mkdir /Users/saltfactory/shared/yobi-0.8.2
+    - mkdir yobi
     - bash shell/yobi.sh build
     - bash shell/yobi.sh init
     - bash shell/yobi.sh stop
     - bash shell/yobi.sh rm
-    
