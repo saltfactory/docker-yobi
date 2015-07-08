@@ -16,6 +16,6 @@ DOCKER_CONTAINER_PORT="7001"
 ############################################################
 ## container volumes, if you want to install full package, you must remove YOBI_SOURCE.
 #YOBI_SOURCE="/Users/saltfactory/shared/yobi-0.8.2"
-YOBI_HOME="/Users/saltfactory/shared/yobi-0.8.2"
-YOBI_OPT="-Xmx1024m -Xms1024m"
+YOBI_HOME="/Users/saltfactory/shared/yobi-home"
+JAVA_OPT="-Xmx1024m -Xms1024m"
 ############################################################

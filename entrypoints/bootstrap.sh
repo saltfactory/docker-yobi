@@ -1,11 +1,7 @@
 #!/bin/bash
-
-# echo $YOBI_HOME
-# cd /yobi/home; activator "start -DapplyEvolutions.default=true -Dhttp.port=9000"
-
-
-#!/bin/bash
 set -e
+
+# cd /yobi/home; activator "start -DapplyEvolutions.default=true -Dhttp.port=9000"
 
 if [ -n "$BEFORE_SCRIPT" ]; then
   set +e
@@ -24,9 +20,7 @@ if [ -n "$(ls -A /yobi/source)" ]; then
   cd /yobi/release; activator "start -DapplyEvolutions.default=true -Dhttp.port=9000"
 else
   echo "*** Straing container yobi bin ... ***"
-  cd /yobi/release; bin/yobi
-  # docker mv /yobi/release /yobi/release.bak
-  # ln -s /yobi/release /yobi/home
+  cd /yobi/release/yobi-0.8.2; bin/yobi
 fi
 
 

@@ -25,6 +25,7 @@ RUN rm -rf /var/cache/oracle-jdk8-installer && apt-get clean && rm -rf /var/lib/
 RUN useradd -m -d /yobi -s /bin/bash -U yobi
 
 RUN mkdir /yobi/downloads
+
 RUN cd /yobi/downloads; \
     wget http://downloads.typesafe.com/typesafe-activator/1.2.10/typesafe-activator-1.2.10-minimal.zip &&\
     unzip typesafe-activator-1.2.10-minimal.zip
@@ -35,7 +36,8 @@ RUN cd /yobi/downloads; \
     unzip -d /yobi/release yobi-0.8.2.zip
 
 ## set environment variables
-ENV YOBI_HOME "/yobi/release"
+
+ENV YOBI_HOME "/yobi/home"
 ENV JAVA_OPTS "-Xmx2048m -Xms2048m"
 ENV PATH $PATH:/yobi/downloads/activator-1.2.10-minimal
 
