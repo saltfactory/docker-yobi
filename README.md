@@ -19,7 +19,7 @@
 - **shell/yobi.sh build** : yobi 0.8.2 풀 패키지 버전을 빌드합니다.
 - **shell/yobi.sh build src** : yobi 0.8.2 소소 패키지 버전을 빌드합니다.
 - **shell/yobi.sh init** : 빌드한 docker 이미지를 컨테이너로 초기 실행합니다.
-- **shell/yobi.sh stop** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
+- **shell/yobi.sh start** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
 - **shell/yobi.sh restart** : 컨테이너를 재시작합니다.
 - **shell/yobi.sh stop** : 커네티너를 중지합니다.
 - **shell/yobi.sh rm** : 컨테이너를 삭제합니다.
