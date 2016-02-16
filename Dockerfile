@@ -33,7 +33,7 @@ RUN cd /yobi/downloads; \
 ## install yobi
 RUN cd /yobi/downloads; \
     wget https://github.com/yona-projects/yona/releases/download/v1.0.0-beta/yobi-data-export.zip && \
-    unzip -d /yobi/yobi-data-export.zip
+    unzip -d /yobi/release yobi-data-export.zip
 
 ## set environment variables
 
