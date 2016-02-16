@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER SungKwang Song <saltfactory@gmail.com>
 
-LABEL Description="This image is used to start the yobi-0.8.1" Vendor="saltfactory.net" Version="0.8.1"
+LABEL Description="This image is used to start the yobi-0.8.2" Vendor="saltfactory.net" Version="0.8.2"
 
 ## replace debian mirror with ftp.daum.net in Korea
 RUN cd /etc/apt && \
@@ -32,8 +32,8 @@ RUN cd /yobi/downloads; \
 
 ## install yobi
 RUN cd /yobi/downloads; \
-    wget https://github.com/naver/yobi/releases/download/v0.8.2/yobi-0.8.2.zip && \
-    unzip -d /yobi/release yobi-0.8.2.zip
+    wget https://github.com/yona-projects/yona/releases/download/v1.0.0-beta/yobi-data-export.zip && \
+    unzip -d /yobi/yobi-data-export.zip
 
 ## set environment variables
 
