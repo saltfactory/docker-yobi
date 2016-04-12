@@ -17,7 +17,6 @@
 간단히 **shell/yobi.sh** 쉘 파일을 실행시키면 됩니다.
 
 - **shell/yobi.sh build** : yobi 0.8.2 풀 패키지 버전을 빌드합니다.
-- **shell/yobi.sh build src** : yobi 0.8.2 소소 패키지 버전을 빌드합니다.
 - **shell/yobi.sh init** : 빌드한 docker 이미지를 컨테이너로 초기 실행합니다.
 - **shell/yobi.sh start** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
 - **shell/yobi.sh restart** : 컨테이너를 재시작합니다.
@@ -100,23 +99,6 @@ bash shell/yobi.sh build
 ```
 ```
 yobi build
-```
-
-### 2. 소스 패키지 이미지 생성
-
-**shell/config.sh** 에서 정의한 소스 패키지 이미지를 생성하기 위해 **build src** 옵션을 사용합니다.
-한가지 중요하게 중의해야할 것은 만약 **소스 패키지**로 설치를 하려면
-
-> 반드시 **shell/config.sh** 파일의 `YOBI_SOURCE` 변수에 YOBI의 소스 디렉토리 경로를 입력합니다.
-
-```
-bash shell/yobi.sh build src
-```
-```
-./shell/yobi build src
-```
-```
-yobi build src
 ```
 
 ## 컨테이너 실행
@@ -214,13 +196,12 @@ bash shell/yobi.sh log
 yobi log
 ```
 
-## 기부하기
+# 변경점
+개인적으로 사용하기 위하여 fork버전을 수정함
+- src에서 빌드 부분을 삭제
+- 1.* 버전으로 이전하기 위하여 yona프로젝트의 data-export버전 추가 :
+ - data-export브랜치
 
-> 기부금은 연구활동과 블로그 운영에 사용됩니다.
-
-기부방법은 [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)을 이용하는 방법이 있습니다.
-
-[![paypal button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 
 The MIT License (MIT)
