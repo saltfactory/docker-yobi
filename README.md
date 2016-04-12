@@ -5,13 +5,11 @@
 [![Build Status](https://travis-ci.org/saltfactory/docker-yobi.svg)](https://travis-ci.org/saltfactory/docker-yobi)
 
 
-**docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
+**docker-yona**는 **git** 기반 협업 프레임워크 [Yona](http://yona.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
 
-![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
-(이미지출처 : http://yobi.io)
 
 ## 변경점
-개인적으로 사용하기 위하여 fork버전을 수정함
+yona로 이전하기 위하여 위하여 fork버전을 수정함
 
 - src에서 빌드 부분을 삭제
 - 1.* 버전으로 이전하기 위하여 yona프로젝트의 data-export 바이너리로 빌드함
