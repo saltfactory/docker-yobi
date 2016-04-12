@@ -26,20 +26,20 @@ RUN useradd -m -d /yobi -s /bin/bash -U yobi
 
 RUN mkdir /yobi/downloads
 
-RUN cd /yobi/downloads; \
-    wget http://downloads.typesafe.com/typesafe-activator/1.2.10/typesafe-activator-1.2.10-minimal.zip &&\
-    unzip typesafe-activator-1.2.10-minimal.zip
+#RUN cd /yobi/downloads; \
+#    wget http://downloads.typesafe.com/typesafe-activator/1.2.10/typesafe-activator-1.2.10-minimal.zip &&\
+#    unzip typesafe-activator-1.2.10-minimal.zip
 
 ## install yobi
 RUN cd /yobi/downloads; \
-    wget https://github.com/yona-projects/yona/releases/download/v1.0.0-beta/yobi-data-export.zip && \
+    wget https://github.com/yona-projects/yona/releases/download/v1.0.0/yobi-data-export.zip && \
     unzip -d /yobi/release yobi-data-export.zip
 
 ## set environment variables
 
 ENV YOBI_HOME "/yobi/home"
 ENV JAVA_OPTS "-Xmx2048m -Xms2048m"
-ENV PATH $PATH:/yobi/downloads/activator-1.2.10-minimal
+#ENV PATH $PATH:/yobi/downloads/activator-1.2.10-minimal
 
 ## add entrypoints
 ADD ./entrypoints /yobi/entrypoints

@@ -17,51 +17,27 @@ function is_exists {
 }
 
 function build_image {
-  if [ "$1" = "src" ]; then
-    echo "*** [Building] \"$DOCKER_IMAGE\" via sources package ***"
-    if [ ! -d $YOBI_SOURCE ]; then
-      git https://github.com/naver/yobi.git $YOBI_SOURCE
-    else
-      echo "*** $YOBI_HOME is exist"
-    fi
-  else
-    if [ ! -d $YOBI_HOME ]; then
-      mkdir -p $YOBI_HOME
-    fi
-    echo "*** [Building] \"$DOCKER_IMAGE\" via full package ***"
+  if [ ! -d $YOBI_HOME ]; then
+    mkdir -p $YOBI_HOME
   fi
+  echo "*** [Building] \"$DOCKER_IMAGE\" via full package ***"
 
   docker build -t $DOCKER_IMAGE .
-
 }
 
 function init_container {
   remove_containers
 
-  if [ -n "$YOBI_SOURCE" ]; then
-    echo "*** [init YOBI source package] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
-    docker run \
-    --name $DOCKER_CONTAINER_NAME \
-    --restart always \
-    -p $DOCKER_CONTAINER_PORT:9000 \
-    -v $YOBI_SOURCE:/yobi/source \
-    -v $YOBI_HOME:/yobi/home \
-    -e JAVA_OPT="$YOBI_OPT" \
-    -e BEFORE_SCRIPT=before.sh \
-    -d \
-    $DOCKER_IMAGE
-  else
-    echo "*** [init YOBI full pakage] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
-    docker run \
-    --name $DOCKER_CONTAINER_NAME \
-    --restart always \
-    -p $DOCKER_CONTAINER_PORT:9000 \
-    -v $YOBI_HOME:/yobi/home \
-    -e JAVA_OPT="$JAVA_OPT" \
-    -e BEFORE_SCRIPT=before.sh \
-    -d \
-    $DOCKER_IMAGE
-  fi
+  echo "*** [init YOBI full pakage] Name: \"$DOCKER_CONTAINER_NAME\" PORT: $DOCKER_CONTAINER_PORT ***"
+  docker run \
+  --name $DOCKER_CONTAINER_NAME \
+  --restart always \
+  -p $DOCKER_CONTAINER_PORT:9000 \
+  -v $YOBI_HOME:/yobi/home \
+  -e JAVA_OPT="$JAVA_OPT" \
+  -e BEFORE_SCRIPT=before.sh \
+  -d \
+  $DOCKER_IMAGE
 
   docker ps
 }
