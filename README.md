@@ -10,6 +10,13 @@
 ![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
 (이미지출처 : http://yobi.io)
 
+## 변경점
+개인적으로 사용하기 위하여 fork버전을 수정함
+
+- src에서 빌드 부분을 삭제
+- 1.* 버전으로 이전하기 위하여 yona프로젝트의 data-export 바이너리로 빌드함
+ - data-export브랜치
+
 
 ## 사용방법
 
@@ -195,14 +202,6 @@ bash shell/yobi.sh log
 ```
 yobi log
 ```
-
-# 변경점
-개인적으로 사용하기 위하여 fork버전을 수정함
-- src에서 빌드 부분을 삭제
-- 1.* 버전으로 이전하기 위하여 yona프로젝트의 data-export버전 추가 :
- - data-export브랜치
-
-
 
 The MIT License (MIT)
 
