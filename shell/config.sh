@@ -2,20 +2,18 @@
 
 ############################################################
 ## docker project name
-PROJECT_NAME="docker-yobi"
+PROJECT_NAME="docker-yona"
 ############################################################
 ## docker configurations
-DOCKER_USER="saltfactory"
-DOCKER_VERSION="0.8.2"
-DOCKER_NAME="yobi"
+DOCKER_USER="pokev25"
+DOCKER_VERSION="1.0.1"
+DOCKER_NAME="yona"
 DOCKER_IMAGE="$DOCKER_USER/$DOCKER_NAME:$DOCKER_VERSION"
 ############################################################
 ## container configurations
-DOCKER_CONTAINER_NAME="yobi"
+DOCKER_CONTAINER_NAME="yona"
 DOCKER_CONTAINER_PORT="9000"
 ############################################################
-## container volumes, if you want to install full package, you must remove YOBI_SOURCE.
-#YOBI_SOURCE="/Users/saltfactory/shared/yobi-0.8.2"
-# YOBI_HOME="/Users/saltfactory/shared/yobi-home"
+# YONA_HOME="/home/user/yona-home"
 JAVA_OPT="-Xmx1024m -Xms1024m"
 ############################################################
