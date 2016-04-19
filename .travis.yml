@@ -9,3 +9,6 @@ script:
     - bash shell/yona.sh init
     - bash shell/yona.sh stop
     - bash shell/yona.sh rm
+
+notifications:
+  email: false
