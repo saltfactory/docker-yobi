@@ -1,8 +1,7 @@
-sudo: true
+sudo: required
 
-
-install:
-    - curl -sLo - http://j.mp/install-travis-docker | sh -xe
+services:
+      - docker
 
 script:
     - mkdir yona
