@@ -20,7 +20,7 @@ yona로 이전하기 위하여 위하여 fork버전을 수정함
 **docker-yona**는 복잡한 설정 없이 현재 운영하고 있는 **yona** 프로젝트를 바로 최신 yona 서비스로 운영할 수 있게 도와줍니다.
 간단히 **shell/yona.sh** 쉘 파일을 실행시키면 됩니다.
 
-- **shell/yona.sh build** : yona 0.8.2 풀 패키지 버전을 빌드합니다.
+- **shell/yona.sh build** : yona 컨테이너를 빌드합니다.
 - **shell/yona.sh init** : 빌드한 docker 이미지를 컨테이너로 초기 실행합니다.
 - **shell/yona.sh start** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
 - **shell/yona.sh restart** : 컨테이너를 재시작합니다.
