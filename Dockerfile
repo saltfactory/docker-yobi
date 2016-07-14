@@ -19,6 +19,9 @@ RUN apt-get install -y oracle-java8-installer oracle-java8-set-default
 ## install extra package
 RUN apt-get install -y unzip
 
+## Timezone
+RUN echo "Asia/Seoul" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+
 ## remove cache
 RUN rm -rf /var/cache/oracle-jdk8-installer && apt-get clean && rm -rf /var/lib/apt/lists/*
 
