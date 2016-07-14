@@ -1,227 +1,56 @@
-# docker-yobi
+# docker-yona
 
 ![License](https://img.shields.io/github/license/mashape/apistatus.svg)
-[![Latest release](https://img.shields.io/badge/release-v0.8.2-ff69b4.svg)](https://github.com/saltfactory/docker-yobi/releases)
-[![Build Status](https://travis-ci.org/saltfactory/docker-yobi.svg)](https://travis-ci.org/saltfactory/docker-yobi)
+[![Build Status](https://travis-ci.org/pokev25/docker-yona.svg)](https://travis-ci.org/pokev25/docker-yona)
 
 
-**docker-yobi**는 **Naver**의 **git** 기반 협업 프레임워크 [Yobi](http://yobi.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
-
-![yobi image](http://assets.hibrainapps.net/images/rest/data/484?size=full&m=1435125394)
-(이미지출처 : http://yobi.io)
+**docker-yona**는 **git** 기반 협업 프레임워크 [Yona](http://yona.io)를 사용하기 편리하게 docker 컨테이너로 만든 컨테이너 이미지 입니다.
 
 
-## 사용방법
+## 변경점
+yona로 이전하기 위하여 위하여 fork버전을 수정함
 
-**docker-yobi**는 복잡한 설정 없이 현재 운영하고 있는 **Yobi** 프로젝트를 바로 최신 Yobi 서비스로 운영할 수 있게 도와줍니다.
-간단히 **shell/yobi.sh** 쉘 파일을 실행시키면 됩니다.
+- src에서 빌드 부분을 제거
+- 1.* 버전으로 이전하기 위하여 yona프로젝트의 data-export 바이너리로 빌드함
+ - data-export브랜치
 
-- **shell/yobi.sh build** : yobi 0.8.2 풀 패키지 버전을 빌드합니다.
-- **shell/yobi.sh build src** : yobi 0.8.2 소소 패키지 버전을 빌드합니다.
-- **shell/yobi.sh init** : 빌드한 docker 이미지를 컨테이너로 초기 실행합니다.
-- **shell/yobi.sh stop** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
-- **shell/yobi.sh restart** : 컨테이너를 재시작합니다.
-- **shell/yobi.sh stop** : 커네티너를 중지합니다.
-- **shell/yobi.sh rm** : 컨테이너를 삭제합니다.
-- **shell/yobi.sh log** : 컨테이너의 로그를 출력합니다.
-- **shell/yobi.sh exec** : 운영중인 컨테이너 내부에 **bash** 쉘로 들어가게 됩니다.
+
+## 간단 사용방법
+
+**docker-yona**는 복잡한 설정 없이 현재 운영하고 있는 **yona** 프로젝트를 바로 최신 yona 서비스로 운영할 수 있게 도와줍니다.
+간단히 **shell/yona.sh** 쉘 파일을 실행시키면 됩니다.
+
+- **shell/yona.sh build** : yona 컨테이너를 빌드합니다.
+- **shell/yona.sh init** : 빌드한 docker 이미지를 컨테이너로 초기 실행합니다.
+- **shell/yona.sh start** : 컨테이너가 존재하면 존재하는 컨테이너를 실행합니다.
+- **shell/yona.sh restart** : 컨테이너를 재시작합니다.
+- **shell/yona.sh stop** : 커네티너를 중지합니다.
+- **shell/yona.sh rm** : 컨테이너를 삭제합니다.
+- **shell/yona.sh log** : 컨테이너의 로그를 출력합니다.
+- **shell/yona.sh exec** : 운영중인 컨테이너 내부에 **bash** 쉘로 들어가게 됩니다.
 
 쉘 파일은 다음과 같이 **+x** 권한을 추가해 명령어를 간단하게 만들 수 있습니다.
 
 ```
-chmod +x shell/yobi.sh
+chmod +x shell/yona.sh
 ```
 ```
-./shell/yobi start
+./shell/yona start
 ```
 
 [alias](http://www.linfo.org/alias.html)를 사용하면 더욱 간단하게 만들 수 있습니다. **~/.bash_profile**을 열어서 다음을 추가합니다.
 
 ```
-alias yobi="bash {docker-yobi홈}/shell/yobi.sh"
+alias yona="bash {docker-yona홈}/shell/yona.sh"
 ```
 
-터미널을 재 시작하거나 **source ~/.bash_profile**을 합니다. 이후에 다음과 같이 **yobi** 를 사용하여 간단하게 실행할 수 있습니다.
+터미널을 재 시작하거나 **source ~/.bash_profile**을 합니다. 이후에 다음과 같이 **yona** 를 사용하여 간단하게 실행할 수 있습니다.
 
 ```
-yobi start
+yona start
 ```
 
-
-## 설정
-
-`config.sh` 파일을 열어서 필요한 정보를 수정합니다.
-
-만약 기존의 yobi를 사용하고 있다면 `YOBI_HOME`의 경로를 기존의 프로젝트 경로로 지정합니다.
-YOBI_HOME의 `conf/`, `yobi.h2.db`, `repo/`, `uploads/` 를 자동으로 읽어 사용하게 됩니다.
-새롭게 시작한다면 YOBI_HOME에 지정한 디렉토리 안에 이 디렉토리와 파일들이 생성됩니다.
-
-```
-vi config.sh
-```
-```bash
-#!/bin/bash
-
-############################################################
-## docker project name
-PROJECT_NAME="docker-yobi"
-############################################################
-## docker configurations
-DOCKER_USER="saltfactory"
-DOCKER_VERSION="0.8.2"
-DOCKER_NAME="yobi"
-DOCKER_IMAGE="$DOCKER_USER/$DOCKER_NAME:$DOCKER_VERSION"
-############################################################
-## container configurations
-DOCKER_CONTAINER_NAME="demo-yobi"
-DOCKER_CONTAINER_PORT="7001"
-############################################################
-## container volumes, if you want to install full package, you must remove YOBI_SOURCE.
-#YOBI_SOURCE="/Users/saltfactory/shared/yobi-0.8.2"
-YOBI_HOME="/Users/saltfactory/shared/yobi-0.8.2"
-YOBI_OPT="-Xmx1024m -Xms1024m"
-############################################################
-```
-
-## 이미지 생성 빌드
-
-### 1. 풀 패키지 이미지 생성
-
-**shell/config.sh** 에서 정의한 풀 패키지 이미지를 생성하기 위해 **build** 옵션을 사용합니다.
-한가지 중요하게 중의해야할 것은 만약 **풀 패키지**로 설치를 하려면
-
-> 반드시 **shell/config.sh** 파일의 `YOBI_SOURCE` 변수를 삭제하고 실행합니다.
-
-```
-bash shell/yobi.sh build
-```
-```
-./shell/yobi build
-```
-```
-yobi build
-```
-
-### 2. 소스 패키지 이미지 생성
-
-**shell/config.sh** 에서 정의한 소스 패키지 이미지를 생성하기 위해 **build src** 옵션을 사용합니다.
-한가지 중요하게 중의해야할 것은 만약 **소스 패키지**로 설치를 하려면
-
-> 반드시 **shell/config.sh** 파일의 `YOBI_SOURCE` 변수에 YOBI의 소스 디렉토리 경로를 입력합니다.
-
-```
-bash shell/yobi.sh build src
-```
-```
-./shell/yobi build src
-```
-```
-yobi build src
-```
-
-## 컨테이너 실행
-
-### 1. 컨테이너 초기 실행
-**shell/config.sh** 에서 정의한 컨테이너를 초기 실행하기 위해 **init** 옵션을 사용합니다.
-
-```
-bash shell/yobi.sh init
-```
-```
-./shell/yobi init
-```
-```
-yobi init
-```
-
-### 2. 컨테이너 실행
-컨테이너가 실행했던 적이 있다면 캐시에 있는 정보를 불러와 빠르게 다시 시작하기 위해 **start** 옵션을 사용합니다.
-
-```
-bash shell/yobi.sh start
-```
-```
-./shell/yobi start
-```
-```
-yobi start
-```
-
-### 3. 컨테이너 재실행
-컨테이너가 실행되고 있을 때 컨테이너를 다시 실행하기 위해 **restart** 옵션을 사용합니다.
-
-```
-bash shell/yobi.sh restart
-```
-```
-./shell/yobi restart
-```
-```
-yobi restart
-```
-
-## 컨테이너 중지
-
-컨테이너가 실행되고 있을 때 컨테이너를 중지하기 위해 **stop** 옵션을 사용합니다.
-
-```
-bash shell/yobi.sh stop
-```
-```
-./shell/yobi.sh stop
-```
-```
-yobi stop
-```
-
-## 컨테이너 삭제
-
-캐시에 있는 컨테이너를 모두 삭제하기 위해 **rm** 옵션을 사용합니다.
-
-```
-bash shell/yobi.sh rm
-```
-```
-./shell/yobi rm
-```
-```
-yobi rm
-```
-
-## 컨테이너 내부 접속
-컨테이너가 실행되고 있을 때 컨테이너에 접속하기 위해 **exec** 옵션을 사용합니다. 컨테이너 내부에 bash 쉘로 들어가게 됩니다.
-
-```
-bash shell/yobi.sh exec
-```
-```
-./shell/yobi exec
-```
-```
-yobi exec
-```
-
-## 컨테이너 로그 출력
-컨테이너의 로그를 확인하기 위해서 **log** 옵션을 사용합니다.
-
-```
-bash shell/yobi.sh log
-```
-```
-./shell/yobi log
-```
-```
-yobi log
-```
-
-## 기부하기
-
-> 기부금은 연구활동과 블로그 운영에 사용됩니다.
-
-기부방법은 [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)을 이용하는 방법이 있습니다.
-
-[![paypal button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NR99D2BERKK8Y&lc=KR&item_name=donate%2esaltfactory%2enet&item_number=net%2esaltfactory%2edonate&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
-
+상세 사용법은 wiki 참조
 
 The MIT License (MIT)
 
